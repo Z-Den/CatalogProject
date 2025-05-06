@@ -1,0 +1,48 @@
+{% extends "catalog/base.html" %}
+{% block title %}Список товаров{% endblock %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'catalog/product_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Список товаров</h2>
+
+<form method="get" class="filter-sort-block">
+    <div class="form-group">
+        <i class="fas fa-search"></i>
+        <input type="text" name="search" value="{{ query }}" placeholder="Поиск по марке или вкусу">
+    </div>
+    
+    <div class="form-group">
+        <i class="fas fa-tags"></i>
+        <select name="category">
+            <option value="">Все категории</option>
+            {% for cat in categories %}
+                <option value="{{ cat.name }}" {% if cat.name == selected_category %}selected{% endif %}>{{ cat.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <i class="fas fa-sort"></i>
+        <select name="sort">
+            <option value="">Сортировать по...</option>
+            <option value="brand" {% if selected_sort == 'brand' %}selected{% endif %}>Марке</option>
+            <option value="sugar_content" {% if selected_sort == 'sugar_content' %}selected{% endif %}>Сахару</option>
+            <option value="expiration_date" {% if selected_sort == 'expiration_date' %}selected{% endif %}>Сроку годности</option>
+        </select>
+    </div>
+
+    <button type="submit"><i class="fas fa-filter"></i>Применить</button>
+</form>
+
+<ul>
+    {% for product in products %}
+        <li><a href="{% url 'product_detail' product.id %}">{{ product }}</a></li>
+    {% empty %}
+        <li>Нет товаров по вашему запросу.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+

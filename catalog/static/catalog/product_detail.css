@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fffdf5;
+    padding: 20px;
+}
+
+h1 {
+    color: #2c2c2c;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #0074d9;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #004a99;
+    text-decoration: underline;
+}

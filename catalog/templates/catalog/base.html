@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Каталог{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'catalog/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'product_list' %}">Каталог морсов</a></h1>
+        <nav>
+            <a href="{% url 'product_list' %}">Товары</a> |
+            <a href="{% url 'about' %}">О сервисе</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p style="text-align:center; color: #777;">&copy; 2025 Морсы и точка.</p>
+    </footer>
+</body>
+</html>
