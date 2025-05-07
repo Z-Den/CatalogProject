@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ product.brand }} — {{ product.flavor }}</h1>
+<ul>
+    <li>Цена: {{ product.price }} ₽</li>
+    <li>Мелкий опт (от {{ product.small_wholesale_quantity }}): {{ product.small_wholesale_price }} ₽</li>
+    <li>Крупный опт (от {{ product.large_wholesale_quantity }}): {{ product.large_wholesale_price }} ₽</li>
+    <li>Объём: {{ product.volume }} л</li>
+    <li>Сахар: {{ product.sugar_content }} г/л</li>
+    <li>Алкогольный: {{ product.is_alcoholic|yesno:"Да,Нет" }}</li>
+    <li>Категория: {{ product.category.name }}</li>
+    {% if product.expiration_date %}
+        <li>Годен до: {{ product.expiration_date }}</li>
+    {% endif %}
+</ul>
+
+{% if perms.catalog.manage_order %}
+<form method="post" action="{% url 'add_to_cart' product.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+</form>
+{% endif %}
+
+<a href="{% url 'product_list' %}" class="back-link">← Назад к списку</a>
+{% endblock %}

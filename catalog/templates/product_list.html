@@ -1,4 +1,4 @@
-{% extends "catalog/base.html" %}
+{% extends "base.html" %}
 {% block title %}Список товаров{% endblock %}
 {% load static %}
 {% block extra_css %}
@@ -40,9 +40,20 @@
 <ul>
     {% for product in products %}
         <li><a href="{% url 'product_detail' product.id %}">{{ product }}</a></li>
+        {% if perms.catalog.change_product %}
+            <a href="{% url 'product_edit' product.pk %}">Редактировать</a>
+        {% endif %}
     {% empty %}
         <li>Нет товаров по вашему запросу.</li>
     {% endfor %}
 </ul>
+
+{% if perms.catalog.add_product or perms.catalog.change_product %}
+    <section>
+      <h2>Товаровед</h2>
+      <a href="{% url 'product_create' %}" class="btn">Добавить новый товар</a>
+    </section>
+{% endif %}
+
 {% endblock %}
 

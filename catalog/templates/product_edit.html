@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>Редактировать товар</h1>
+
+  {% if perms.catalog.change_product %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+      <a href="{% url 'product_detail' product.pk %}" class="btn btn-secondary">Отмена</a>
+    </form>
+  {% else %}
+    <div class="alert alert-danger">
+      У вас нет прав для редактирования этого товара.
+    </div>
+  {% endif %}
+{% endblock %}
