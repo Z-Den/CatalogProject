@@ -42,9 +42,6 @@
     </tfoot>
 </table>
 
-{% if perms.catalog.change_product %}
-    <a href="{% url 'catalog:product_edit' product.pk %}">Редактировать</a>
-{% endif %}
 
 {% if perms.catalog.manage_order %}
 <a href="{% url 'create_order' %}" class="btn btn-primary">Оформить заказ</a>
