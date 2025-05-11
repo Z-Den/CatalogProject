@@ -7,6 +7,7 @@ class ContentTests(TestCase):
         # Создаем и сохраняем категории
         self.category1 = Category.objects.create(name='натуральный')
         self.category2 = Category.objects.create(name='диетический')
+        self.category3 = Category.objects.create(name='с добавлеием консервантов')
         
         # Создаем и сохраняем продукты
         self.product1 = Product.objects.create(
@@ -21,15 +22,27 @@ class ContentTests(TestCase):
             brand="BBB Brand",
             sugar_content=15,
             volume=1,
-            is_alcoholic=True,
+            is_alcoholic=False,
             flavor="Цитрусовый",
             category=self.category2
         )
 
+        self.product3 = Product.objects.create(
+            brand="CCC Brand",
+            sugar_content=20,
+            volume=1,
+            is_alcoholic=True,
+            flavor="Яблочный",
+            category=self.category3
+        )
+
     def test_product_list_content(self):
         response = self.client.get(reverse('product_list'))
+        print(f"Ответ на запрос: {response.content.decode('utf-8')}")
         self.assertContains(response, self.product1.brand)
         self.assertContains(response, self.product2.brand)
+        self.assertNotContains(response, self.product3.brand)
+        
 
     def test_product_detail_content(self):
         response = self.client.get(reverse('product_detail', args=[self.product1.id]))
